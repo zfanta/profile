@@ -48,7 +48,7 @@ export default function SectionItem ({ children, title, duration, subTitle, id }
       'relative',
       'before:absolute',
       'before:border-b',
-      'before:border-black',
+      'before:border-b-[rgb(var(--foreground-rgb))]',
       'before:h-px',
       'before:w-full',
       'before:-top-8',

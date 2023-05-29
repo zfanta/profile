@@ -1,8 +1,13 @@
 import ytfmWebImage from '@/public/projects/ytfm/web.png'
 import ytfmEmailImage from '@/public/projects/ytfm/email.png'
+
 import webterminalImage from '@/public/projects/webterminal.png'
-import jdjRNImage0 from '@/public/projects/jdj-rn/0.png'
-import jdjRNImage1 from '@/public/projects/jdj-rn/1.png'
+
+import jdjRNImageLight0 from '@/public/projects/jdj-rn/light-0.png'
+import jdjRNImageLight1 from '@/public/projects/jdj-rn/light-1.png'
+import jdjRNImageDark0 from '@/public/projects/jdj-rn/dark-0.png'
+import jdjRNImageDark1 from '@/public/projects/jdj-rn/dark-1.png'
+
 import jdjFEImage0 from '@/public/projects/jdj-fe/0.png'
 import jdjFEImage1 from '@/public/projects/jdj-fe/1.png'
 
@@ -198,7 +203,10 @@ const projects: Array<{
   body: string
   skills: Array<typeof skill[keyof typeof skill]>
   images: Array<Array<{
-    src: StaticImageData
+    srcset: Array<{
+      src: StaticImageData
+      colorScheme?: 'light' | 'dark'
+    }>
     alt: string
     width: number
     height: number
@@ -255,17 +263,29 @@ const projects: Array<{
     * Code Push 배포 환경 구축
   `,
   images: [[{
-    src: jdjRNImage0,
+    srcset: [{
+      src: jdjRNImageLight0,
+      colorScheme: 'light'
+    }, {
+      src: jdjRNImageDark0,
+      colorScheme: 'dark'
+    }],
     width: 590,
     height: 1280,
     alt: '전대전 모바일 어플리케이션 스크린샷',
-    ratio: 1
+    ratio: 1,
   }, {
-    src: jdjRNImage1,
+    srcset: [{
+      src: jdjRNImageLight1,
+      colorScheme: 'light'
+    }, {
+      src: jdjRNImageDark1,
+      colorScheme: 'dark'
+    }],
     width: 590,
     height: 1280,
     alt: '전대전 모바일 어플리케이션 스크린샷',
-    ratio: 1
+    ratio: 1,
   }]],
   skills: getSkills('reactNative', 'graphql', 'codePush')
 }, {
@@ -282,13 +302,17 @@ const projects: Array<{
     * 게시물 상세 페이지 구현
   `,
   images: [[{
-    src: jdjFEImage0,
+    srcset: [{
+      src: jdjFEImage0,
+    }],
     width: 750,
     height: 1334,
     alt: '전대전 웹페이지 스크린샷',
     ratio: 1
   }, {
-    src: jdjFEImage1,
+    srcset: [{
+      src: jdjFEImage1
+    }],
     width: 750,
     height: 1334,
     alt: '전대전 웹페이지 스크린샷',
@@ -355,7 +379,9 @@ const projects: Array<{
     * 각종 버그 수정, 기능 개선
   `,
   images: [[{
-    src: webterminalImage,
+    srcset: [{
+      src: webterminalImage
+    }],
     alt: '3270 터미널 웹 브라우저',
     width: 1920,
     height: 1080,
@@ -395,13 +421,17 @@ const projects: Array<{
     * ical event 처리
   `,
   images: [[{
-    src: ytfmWebImage,
+    srcset: [{
+      src: ytfmWebImage
+    }],
     width: 750,
     height: 1334,
     ratio: 1249 / 1334,
     alt: 'YTFM Web'
   }, {
-    src: ytfmEmailImage,
+    srcset: [{
+      src: ytfmEmailImage
+    }],
     width: 1423,
     height: 1249,
     ratio: 1,
