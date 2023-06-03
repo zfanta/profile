@@ -3,9 +3,9 @@ interface DurationProps {
   to?: Date
 }
 
-export default function Duration ({ from, to }: DurationProps) {
-  const [fromText, toText] = [from, to].map(date => {
-    if (date === undefined) return '현재'
+export default function Duration({ from, to }: DurationProps) {
+  const [fromText, toText] = [from, to].map((date) => {
+    if (date === undefined) return "현재"
     return `${date.getFullYear()}-${`0${date.getMonth() + 1}`.slice(-2)}-${`0${date.getDate()}`.slice(-2)}`
   })
 
