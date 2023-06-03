@@ -1,4 +1,4 @@
-import Section from '@/components/section'
+import Section from '@/app/profile/components/section'
 import { profile } from '@/data'
 
 export default function Profile () {

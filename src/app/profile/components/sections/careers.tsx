@@ -1,7 +1,7 @@
-import Section from '@/components/section'
+import Section from '@/app/profile/components/section'
 import { careers } from '@/data'
-import SectionItem from '@/components/section-item'
-import Markdown from '@/components/markdown'
+import SectionItem from '@/app/profile/components/section-item'
+import Markdown from '../markdown'
 
 
 interface CareerProps {

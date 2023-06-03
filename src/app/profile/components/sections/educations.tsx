@@ -1,6 +1,6 @@
-import Section from '@/components/section'
+import Section from '@/app/profile/components/section'
 import { educations } from '@/data'
-import SectionItem from '@/components/section-item'
+import SectionItem from '@/app/profile/components/section-item'
 
 interface EducationProps {
   education: (typeof educations)[number]

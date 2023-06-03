@@ -1,8 +1,8 @@
-import Section from '@/components/section'
+import Section from '@/app/profile/components/section'
 import { projects } from '@/data'
-import Markdown from '@/components/markdown'
-import SectionItem from '@/components/section-item'
-import Images from '@/components/images'
+import Markdown from '../markdown'
+import SectionItem from '@/app/profile/components/section-item'
+import Images from '@/app/profile/components/images'
 
 interface SkillsProps {
   skills: (typeof projects)[number]['skills']

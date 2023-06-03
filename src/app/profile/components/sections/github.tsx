@@ -1,9 +1,9 @@
-import Section from '@/components/section'
+import Section from '@/app/profile/components/section'
 import { github } from '@/data'
-import SectionItem from '@/components/section-item'
+import SectionItem from '@/app/profile/components/section-item'
 import { Octokit } from 'octokit'
 import { cache } from 'react'
-import Duration from '@/components/duration'
+import Duration from '@/app/profile/components/duration'
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN
@@ -44,7 +44,7 @@ async function PullRequests () {
   return (
     <SectionItem title="Pull Requests">
       <div className="flex flex-col gap-4 mt-4">
-        {github.pullRequests.map(({ pullNumber, owner, repo }, index) => (
+        {github.pullRequests.map(({ pullNumber, owner, repo }) => (
           // @ts-ignore
           <PullRequest
             pullNumber={pullNumber}

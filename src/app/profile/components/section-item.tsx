@@ -1,6 +1,6 @@
 'use client'
 import { ReactNode, useMemo, useState } from 'react'
-import Duration from '@/components/duration'
+import Duration from '@/app/profile/components/duration'
 
 interface TitleProps extends Pick<SectionItemProps, 'title' | 'subTitle' | 'id'> {}
 
