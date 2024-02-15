@@ -1,4 +1,5 @@
 import "./globals.css"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ReactNode } from "react"
 import { profile } from "@/data"
 
@@ -10,7 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body>{children}</body>
+      <body>
+        {children}
+        <SpeedInsights />
+      </body>
     </html>
   )
 }
