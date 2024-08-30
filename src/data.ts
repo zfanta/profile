@@ -520,6 +520,11 @@ const github = {
       pullNumber: 2241,
     },
     {
+      owner: "xpressengine",
+      repo: "xe-core",
+      pullNumber: 1623,
+    },
+    {
       owner: "birkett",
       repo: "CloudFlare-DDNS-Updater",
       pullNumber: 2,
