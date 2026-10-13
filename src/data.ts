@@ -234,18 +234,44 @@ const careers = [
     to: new Date("2025-08-15"),
     body: dedent`
     # 전대전(전국대신전해드립니다) 커뮤니티 서비스 개발
-    
+
     * Nest.js를 사용하여, 백엔드 서버 개발
     * Next.js를 사용하여, 프론트엔드 개발
     * React Native를 사용하여 iOS, Android 어플리케이션 개발
-    
+    * 백엔드, 앱, 웹, 관리자, 인프라(Terraform) 개발, REST → GraphQL 전면 전환
+    * Lambda@Edge 이미지 리사이징, Elasticsearch 검색·모니터링 환경 구축
+
     # 뉴스레터 제작 도구 개발
-    
+
     * Google Workspace 연동
     * 뉴스레터 상태 저장, 이미지 업로드
-    * 웹 브라우저의 Canvas 사용하여 이미지  HTML 코드 생성
+    * 웹 브라우저의 Canvas 사용하여 이미지 → HTML 코드 생성
     * 사각형 배치하여 map 태그 생성
     * 이미지 분할하여 table 태그 생성
+    * Turborepo 모노레포 기반 v2 재개발, 고객사별 내보내기 형식 지원
+
+    # 공모전 접수·심사 시스템 개발
+
+    * 한국건강증진개발원 청소년 흡연예방 공모전 접수, 심사, 결과 발표 시스템 개발 및 2회 운영
+    * 통일부 통일문화 콘텐츠 공모전 접수, 공개 검증, 대국민 투표, 결과 발표, 수상작 갤러리 개발
+    * 한국보건산업진흥원 글로벌 오픈이노베이션 위크 사이트 이전 업체 코드·데이터 인수, 행사 기능 개발
+
+    # 웹진, 홈페이지 개발
+
+    * 한국자산관리공사 웹진 KAMZINE Next.js 신규 구축
+    * 휴비즈 회사 홈페이지, 신한 FP 채용 사이트 개발
+    * 한국주택금융공사, 서울주택도시공사, TIPA 웹진 퍼블리싱 및 운영
+    * 동작구 상권활성화 사이트, 성동구 아파트 공동체 플랫폼, 의료기관평가인증원 세이프티히어로 유지보수
+
+    # 이메일 뉴스레터 제작
+
+    * 서울역사박물관, 한국교직원공제회, 국민건강보험 일산병원, 서울주택도시공사 등 고객사 정기 뉴스레터 HTML 제작
+    * Outlook, Gmail 등 이메일 클라이언트 호환 HTML 작성 가이드 정리
+
+    # 기타
+
+    * 대학 커뮤니티 위한(XE) 유지보수, 앱용 REST API 모듈 개발
+    * 레거시 서버 이전, 장애 복구, 백업
   `,
   },
   {
@@ -563,9 +589,135 @@ const projects: Array<{
   },
   {
     company: hyubiz,
+    name: "공모전 접수·심사 시스템",
+    from: new Date("2025-06-18"),
+    to: new Date("2025-08-15"),
+    body: dedent`
+    한국건강증진개발원 청소년 흡연예방 공모전, 통일부 통일문화 콘텐츠 공모전의 접수, 심사, 결과 발표 시스템.
+
+    # 공개 사이트
+
+    * 메인 배너, 포스터 팝업, 공모 안내(부문, 시상, 심사 기준, 유의사항), 공지사항, Q&A
+    * 수상작 갤러리(영상, 만화, 시, 디카시, 웹툰, 디자인 등), 시상식 영상
+
+    # 접수
+
+    * 다단계 접수 폼: 약관, 지역, 주소 검색, 학교급·학교명, 개인/팀, 작품 제목·기획 의도
+    * S3 presigned URL 다중 파일 업로드, 만 14세 이상·미만 동의서 업로드
+    * 접수번호 자동 발급, 부문별 분류, 부문별 참가 제한, 중복 제출 방지
+    * 접수번호·비밀번호 로그인으로 접수 내용 확인·수정
+
+    # 심사
+
+    * 심사위원 계정별 담당 부문 작품만 노출, 이미지·PDF·HWP·Word 작품 뷰어
+    * 항목별 점수 입력, 배점 초과 표시, 총점 자동 계산, 제출 후 수정 방지, 진행률 표시
+    * 목록 필터·정렬 유지, 필터된 목록 기준 다음 작품 이동
+    * 1차 심사위원별·평균 순위, 2차 심사 결과표(출력용), 부적격 검수, 결과 다운로드
+
+    # 관리자
+
+    * Google 로그인, 접수자 테이블(정렬, 필터, 첨부파일·동의서 일괄 다운로드), 통계
+    * 심사위원 계정 발급
+
+    # 통일문화 콘텐츠 공모전
+
+    * 기존 시스템을 재사용하여 숏폼영상, 캐릭터, 표어·슬로건, 디자인, 스마트툰, 웹툰 부문 구성
+    * 동일인 접수 개수 제한, 접수 확인 화면 팀원 표시, 작품 수정·삭제
+    * 공개 검증 공지, 대국민 투표 안내 페이지, 결과 발표, 일반·AI 분야 수상작 갤러리
+
+    # 성과
+
+    * 청소년 흡연예방 공모전 2회 운영, 누적 접수 1,370여 건, 심사 점수 2,500여 건 처리
+  `,
+    images: [],
+    skills: getSkills("nextjs", "react", "typescript", "prisma", "tailwindcss", "aws"),
+  },
+  {
+    company: hyubiz,
+    name: "한국자산관리공사 웹진 KAMZINE",
+    from: new Date("2024-12-24"),
+    to: new Date("2025-07-29"),
+    body: dedent`
+    한국자산관리공사(캠코) 사보 웹진을 Next.js로 새로 구축.
+
+    # 주요 업무
+
+    * 메인(커버, 캐러셀, 해시태그, 섹션별 썸네일), 서브 페이지 11종
+    * GNB, 모바일 메뉴, 웹툰 뷰어(자동 재생, 이전·다음), 영상 프레임, 칼럼니스트 컴포넌트
+    * 뉴스레터 구독 폼: Server Action, zod 검증, 중복 이메일 처리
+    * 지난호 아카이브, 기존 웹진 경로를 유지하기 위한 리버스 프록시와 fallback rewrite
+    * 대용량 영상 CDN rewrite, Next.js 보안 업데이트
+  `,
+    images: [],
+    skills: getSkills("nextjs", "react", "typescript", "prisma", "tailwindcss"),
+  },
+  {
+    company: hyubiz,
+    name: "신한 FP 채용 사이트",
+    from: new Date("2023-03-19"),
+    to: new Date("2023-05-11"),
+    body: dedent`
+    보험설계사(FP) 채용 공고 게시, 온라인 지원서 접수, 지원자 조회 사이트.
+
+    # 주요 업무
+
+    * 휴대폰 인증(NCP SENS), 회원가입, 로그인, Redis 세션
+    * 채용 공고 등록·조회, 지원서 제출(인적사항, 주소, 경력, 추천인)
+    * 관리자 이메일 매직 링크 로그인(SES), 지원자 목록
+    * 지원서 폼 유효성 검사, 휴대폰 인증 UI, 경력 입력 폼
+    * Terraform으로 Lambda(컨테이너), CloudFront, ACM, SSM, Cloudflare DNS, Vercel 도메인 구성
+    * GitHub Actions로 ECR 배포
+  `,
+    images: [],
+    skills: getSkills("nest", "graphql", "prisma", "mysql", "redis", "nextjs", "terraform", "aws"),
+  },
+  {
+    company: hyubiz,
+    name: "휴비즈 홈페이지",
+    from: new Date("2022-12-05"),
+    to: new Date("2023-03-27"),
+    body: dedent`
+    휴비즈 회사 홈페이지 신규 개발.
+
+    # 주요 업무
+
+    * Home, About, Service, Commerce, Portfolio, Contact 섹션, 반응형 헤더
+    * 포트폴리오 카테고리 필터와 상세 페이지, 고객사 36곳 등록
+    * 문의 폼: reCAPTCHA Enterprise 검증 후 SES로 메일 발송
+    * Facebook, Instagram, YouTube 임베드, 네이버 지도, Safari 호환 문제 수정
+    * 개인정보처리방침 페이지, 운영 수정
+  `,
+    images: [],
+    skills: getSkills("nextjs", "react", "tailwindcss", "aws"),
+  },
+  {
+    company: hyubiz,
+    name: "이메일 뉴스레터 제작",
+    from: new Date("2022-02-07"),
+    to: new Date("2025-08-15"),
+    body: dedent`
+    고객사 정기 이메일 뉴스레터 HTML 제작.
+
+    # 주요 업무
+
+    * 서울역사박물관(영·일·중 번역본 포함), 한국교직원공제회, 한화시스템, 서울시복지재단, GIST, KINS, 국가물산업클러스터, TIPA, 서울투자진흥재단 뉴스레터 제작
+    * 국민건강보험 일산병원, 서울주택도시공사, 아동권리보장원, 중앙취업지원센터 뉴스레터 제작
+    * 링크 영역 기준으로 이미지를 분할해 중첩 table HTML을 만드는 생성기 작성
+    * 인라인 CSS, table 레이아웃, Outlook 이미지 깨짐, 모바일 image map 등 이메일 클라이언트 호환 가이드 작성
+    * 웹 접근성을 위한 이미지 대체 텍스트 작성
+
+    # 성과
+
+    * 고객사 10여 곳, 뉴스레터 HTML 450여 개 제작
+  `,
+    images: [],
+    skills: getSkills("typescript"),
+  },
+  {
+    company: hyubiz,
     name: "커뮤니티 서비스 백앤드",
     from: new Date("2021-07-19"),
-    to: new Date("2025-08-24"),
+    to: new Date("2025-08-15"),
     body: dedent`
     지역 기반 커뮤니티 전대전(전국대신전해드립니다)의 서버. REST, GraphQL API 엔드포인트 제작.
     
@@ -578,10 +730,54 @@ const projects: Array<{
     * Elasticsearch를 사용하여 모니터링 환경 구축
     * Elasticsearch를 사용하여 통계 분석 환경 구축
     * HashiCorp Packer, Terraform를 사용하여 빌드, 배포 라인 구축
-    
+
+    # 회원, 인증
+
+    * 회원가입, 로그인(Redis 세션), 이메일·비밀번호 찾기, 회원 탈퇴, 개인정보 수정, 프로필 이미지
+    * Facebook, Apple OAuth 로그인, NCP SENS 휴대폰 인증, 대학 이메일 인증(SES)
+    * 휴대폰 인증 사용자만 글 작성 허용, 약관·마케팅·위치정보 동의 관리, 사용자 차단
+
+    # 커뮤니티
+
+    * 제보함 생성·수정·구독, 행정구역 데이터 적재 및 지역 검색, 거리 계산
+    * 게시물·댓글 작성, 수정 내역 보관, 좋아요, 스크랩, 신고, 커서 페이지네이션
+    * S3 presigned URL 다중 이미지 업로드, 금칙어(클린 필터) 적용
+    * 좋아요·댓글 기준 인기글 선정을 Bull 큐로 비동기 처리
+    * 알림(댓글, 좋아요, 인기글, 페이스북 발행), 알림 설정, OneSignal 푸시 발송
+    * 공지사항, FAQ, 1:1 문의
+    * 관리자 API: 신고 처리, 사용자 검색, 제보함 관리자 권한, 제보함 설정, 게시물 발행
+
+    # Facebook 페이지 자동 발행
+
+    * Graph API로 제보 글을 페이지에 게시, 예약 발행, 이미지 순서 유지
+    * 홍보 문구 댓글, UTM 파라미터, 발행용 Facebook 앱 분리
+
+    # 검색, 모니터링
+
+    * reversed edge n-gram 분석기로 부분 일치 검색, 제보함·구독 제보함·전체 검색
+    * DB 변경 사항을 Bull 큐로 Elasticsearch에 동기화, 남은 문서 정리
+    * Elasticsearch 8 업그레이드, Elastic APM 도입, GraphQL 필드·Prisma 쿼리 트레이싱
+    * Kibana 통계 대시보드 구성
+
+    # GraphQL 전환
+
+    * REST 기능 전체를 GraphQL(code-first)로 재구현, Relay 스타일 node, connection 페이지네이션
+    * 필드 단위 권한(FieldRole), 페이지네이션·세션 데코레이터, graphql-eslint 규칙
+    * 앱과 웹이 공유하는 GraphQL 클라이언트 패키지(@hyubiz/jdj-graphql) 배포
+
+    # 운영, 인프라
+
+    * Redis 기반 Throttler, CloudFront 환경의 클라이언트 IP(True-Client-IP) 처리, CORS·쿠키 설정
+    * SSM Parameter Store 기반 설정 관리, URL 버전 경로(/v1.0/)
+    * Terraform으로 VPC, RDS, ElastiCache, Elastic Cloud, ALB, ASG, CloudFront, Cloudflare DNS 구성(재사용 모듈 9개)
+    * Packer AMI 빌드, Auto Scaling 정책, API 버전 경로를 처리하는 Lambda@Edge
+    * REST·GraphQL e2e 테스트 34개 파일 작성
+
     # 성과
-    
+
     2022년 3월 ~ 현재 사용자 5,000여 명, 게시물 10,000여 개 확보.
+
+    * Prisma 모델 43개, GraphQL 리졸버 29개
   `,
     images: [],
     skills: getSkills("nest", "graphql", "mysql", "redis", "elasticsearch", "terraform", "aws"),
@@ -590,7 +786,7 @@ const projects: Array<{
     company: hyubiz,
     name: "S3 이미지 리사이징",
     from: new Date("2021-07-19"),
-    to: new Date("2025-08-24"),
+    to: new Date("2025-08-15"),
     body: dedent`
     S3에 저장된 이미지 파일 리사이징. width, height, fit, format 옵션 제공. Lambda@Edge의 origin-response 에서 작동.
     
@@ -599,6 +795,15 @@ const projects: Array<{
     * Node.js의 이미지 처리 라이브러리인 sharp를 사용하여 원본 이미지를 1MB 미만으로 축소
     * HEIC 이미지 처리 환경 구축
     * Github Actions를 사용하여 빌드, 업로드 라인 구축
+    * Accept 헤더에 따른 WebP 자동 변환, BMP 등 20종 포맷 지원
+    * Lambda@Edge 크기 제한을 피하기 위해 실제 변환은 별도 Lambda를 호출하는 구조로 분리
+    * HEIC 지원을 위해 libvips, libheif를 소스 빌드한 Lambda 컨테이너 이미지 작성, jemalloc 적용
+    * 쿼리 파라미터 정규화로 CloudFront 캐시 키 통일
+    * 원본보다 커지는 문제, 삼성 기기 사진 변환 실패 등 수정
+
+    # 성과
+
+    * 리사이징 응답 시간 4,000ms → 300ms
   `,
     images: [],
     skills: getSkills("nodejs", "aws"),
@@ -607,7 +812,7 @@ const projects: Array<{
     company: hyubiz,
     name: "커뮤니티 서비스 모바일 어플리케이션",
     from: new Date("2021-07-19"),
-    to: new Date("2025-08-24"),
+    to: new Date("2025-08-15"),
     body: dedent`
     전대전(전국대신전해드립니다) 서비스의 React Native 구현.
     
@@ -615,6 +820,14 @@ const projects: Array<{
     
     * 어플리케이션 전체 개발
     * Code Push 배포 환경 구축
+    * 외주 개발된 1.x 앱 유지보수 후 화면 38개 2.x 전면 재개발
+    * 메인·인기 피드, 제보함, 검색, 게시물 상세(이미지 캐러셀·뷰어·공유), 글·댓글 작성
+    * 이메일, Facebook, Apple 로그인, 휴대폰 인증, 비밀번호 재설정, 회원 탈퇴
+    * OneSignal 푸시와 알림 화면 이동, 마이페이지, 공지·FAQ·약관, 알림 설정
+    * Apollo Client 캐시 활용, FlashList로 리스트 성능 개선
+    * 다크 모드, 딥링크, App Center 분석, 버전 체크, Sentry 적용
+    * UI 리뉴얼(온보딩, 바텀시트, 커스텀 아이콘 폰트)
+    * Dependabot 도입, 의존성 업데이트, iOS 푸시 인증서 갱신
   `,
     images: [
       [
@@ -658,7 +871,7 @@ const projects: Array<{
     company: hyubiz,
     name: "커뮤니티 서비스 웹페이지",
     from: new Date("2021-07-19"),
-    to: new Date("2025-08-24"),
+    to: new Date("2025-08-15"),
     body: dedent`
     전대전(전국대신전해드립니다) 서비스의 웹 사이트 구현.
     
@@ -667,6 +880,10 @@ const projects: Array<{
     * 관리자 페이지 구현
     * 메인 페이지 구현
     * 게시물 상세 페이지 구현
+    * 약관 페이지, 이미지 줌 슬라이더, 앱 다운로드 모달, 앱 링크(apple-app-site-association, assetlinks.json)
+    * Elastic EUI 기반 관리자: 회원, 게시물 일괄 삭제, 신고 처리, 제보함·관리자 지정, FAQ, 공지사항, 약관
+    * 관리자 화면에서 Facebook 게시물 발행
+    * graphql-codegen, graphql-eslint 적용, Next.js 13 업그레이드, Sentry
   `,
     images: [
       [
@@ -700,7 +917,7 @@ const projects: Array<{
     company: hyubiz,
     name: "뉴스레터 제작 도구",
     from: new Date("2023-01-01"),
-    to: new Date("2025-08-24"),
+    to: new Date("2025-08-15"),
     body: dedent`
     [https://youtu.be/QEGcYB1dKbE](https://youtu.be/QEGcYB1dKbE)
     
@@ -714,7 +931,16 @@ const projects: Array<{
     * Github Actions, Terraform을 사용하여 빌드, 배포 라인 구축
     * map을 포함한 HTML 생성 기능 개발
     * 이미지 분할 및 table을 포함한 HTML 생성 기능 개발
-    
+    * Konva 캔버스 편집기: 줌, 드래그, 사각형 링크 영역 그리기·이동·리사이즈, 충돌 방지, 분할선
+    * Lambda 컨테이너, API Gateway, CloudFront로 서버리스 API 구성
+
+    # v2
+
+    * Turborepo 모노레포(웹, 캔버스 패키지), Redux Toolkit, shadcn/ui로 재개발
+    * 셀 그룹 링크, 링크 템플릿, 링크 검증 다이얼로그
+    * 고객사별 내보내기: 이미지 분할 + 테이블 HTML + 이미지 zip, Outlook용 VML 배경
+    * 그리기·충돌 감지 성능 개선, 가로·세로 로직 데이터 기반 통합 등 리팩토링
+
     # 성과
     
     뉴스레터 HTML 제작을 개발팀에게 전달하지 않고 각 담당자가 수행하여 업무 효율 상승.
