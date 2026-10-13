@@ -254,25 +254,40 @@ const careers = [
     to: new Date("2021-07-31"),
     body: dedent`
     # 3270 터미널 웹 브라우저 구현
-    
+
     * OFGW와 웹소켓을 이용해 통신
     * SVG를 사용하여 화면 구성
     * 한국어, 일본어, 중국어 입력기 구현
-    
-    # 3270 터미널, 오픈프레임 간 통신 중계 서버 개발
-    
+    * 일본어(DBCS) IME 입력 재구현, 단축키, 엑셀 붙여넣기, 우클릭 메뉴, 인쇄 등 고객사 요청 기능 개발
+    * React 기반 렌더링 시제품으로 IE 화면 갱신 8.7초 → 0.29초 단축
+
+    # 3270 터미널, 오픈프레임 간 통신 중계 서버(OFGW) 개발
+
     * 3270 터미널 에뮬레이터와 오픈프레임 간 통신 중계
     * 웹브라우저와 오픈프레임 간 통신 중계
     * JAVA NIO 소켓, 웹소켓으로 클라이언트 연결 제공
     * Tmax 연결을 통해 오픈프레임과 데이터 통신
     * 터미널, 커넥션 자원 관리
     * 터미널, 프로그램의 트랜잭션 스케줄링
-    * 3270 데이터 스트림  JSON 변환
-    
-    # CICS COBOL → JAVA 변환 프로젝트
-    
-    * CICS COBOL 커맨드  JAVA 변환을 위한 CICS COBOL 커맨드 파서 제작
-    * CICS JAVA 커맨드 구현
+    * 3270 데이터 스트림 ↔ JSON 변환
+    * Auto-Install 터미널, idle timeout, PF1 도움말 화면 등 기능 개발
+    * 운영 사이트 장애(무한 루프, CPU 100%, 메모리 릭, SSL, 데드락, 터미널 ID 중복) 분석 및 수정
+
+    # CICS COBOL → JAVA 변환 프로젝트(OF21)
+
+    * CICS COBOL 커맨드 → JAVA 변환을 위한 CICS COBOL 커맨드 파서 제작
+    * CICS JAVA 커맨드 구현(FILE, TSQ, TDQ, CONTAINER, DOCUMENT, SPOOL)
+    * ANTLR4 기반 CICS SD(System Definition) 파서, SD 마이그레이션 도구 개발
+
+    # 빌드, 배포 환경 개선
+
+    * OFGW, 웹터미널 저장소 SVN → Git 이전, Ant → Gradle 빌드 전환
+    * 오픈프레임(OSC) Docker 이미지 제작, 사내 클라우드(ProZone) 배포
+    * 오픈프레임 소스 빌드·설치 가이드 작성, 빌드 결함 15건 정리
+
+    # 성과
+
+    * 미국(Colony Brands, BMO, HPS, SEARS, RRB, Walmart), 일본(DAIKEN, 후지생명), 프랑스(Safran) 등 고객사·내부 이슈 70여 건 처리
   `,
   },
 ]
@@ -716,12 +731,49 @@ const projects: Array<{
     IBM 3270 터미널과 오픈프레임(CICS, AIM, IMS 등) 간 통신 중계 서버 개발 참여.
     
     # 주요 업무
-    
+
     * SSL 커넥션 지원 확대
     * 트랜잭션, 터미널 관련 커맨드를 위한 자원 관리
-    * 메인프레임 트랜잭션 미들웨어 AIM 지원
+    * 메인프레임 트랜잭션 미들웨어 AIM 지원, 기존 vtam gateway 대체
     * 3270 Data Stream ↔ JSON 변환 기능 개선
     * 각종 버그 수정, 기능 추가 및 개선
+
+    # 기능 개발
+
+    * Auto-Install Terminal: SD에 없는 LU 접속 시 AUTINSTMODEL 템플릿으로 터미널 자동 생성, 기동 시 템플릿만 미리 로드
+    * 3270 에뮬레이터 idle timeout: ScheduledThreadPoolExecutor 기반 타이머, NOP keep-alive 패킷 처리
+    * PF1 도움말: 마지막 맵 이름을 웹터미널로 전달하여 맵별 도움말 페이지 표시
+    * RECEIVE BUFFER: 입력 메시지 보관 후 OSC 요청 시 반환, OSC(C)의 SEND CONTROL/SEND MAP 구분 및 MAPFAIL segfault 수정
+    * 리전 이름 기준 서비스 조회로 CICS 트랜잭션 라우팅(원격 리전 next tran) 지원
+    * imscmd OPNDST, CLSDST, RCLSDST, STOP NODE 명령으로 터미널 로그온·로그오프 처리
+    * TACF ID 기반 온라인 사용자 접속 확인·해제, OFManager 터미널 화면 USERID 표시 지원
+    * SO/SI(DBCS shift-out/in), mixed field 처리, CSPG 입력값 BLOB 처리
+    * terminal.webonly 등 설정 기본값 정리, 예외 로그 출력 개선
+
+    # 장애 분석 및 수정
+
+    * 부하 테스트 성능 문제: py3270, wc3270 부하 테스트 스크립트 작성, VisualVM 프로파일링으로 병목 분석
+    * 리전 로그온마다 터미널 7,000여 건을 전체 조회하던 로직을 필요 시 조회·캐시로 변경
+    * 트랜잭션 상태 경합으로 인한 무한 재큐잉 수정
+    * 메모리 릭: MAT 힙덤프 분석으로 종료된 웹소켓 세션 누적 원인 수정(잔존 객체 122개 → 14개)
+    * 터미널 ID 중복: identityHashCode 충돌을 AtomicInteger 기반 ID 생성기로 교체, Node.js cluster로 동시 접속 부하 테스트
+    * 다른 사용자 화면 노출: 반납한 Tmax 채널 재사용으로 인한 clid 충돌 → 채널 폐기 후 재할당, disconnect를 Pipe로 MainThread에 위임
+    * SSL: BUFFER_UNDERFLOW handshake 무한 루프, MSS 초과로 분할된 TLS 레코드 버퍼링, bad record MAC 분석
+    * LU 자동할당 DEVICE-IN-USE 이후 협상 상태 오류로 전체 터미널이 멈추는 문제 수정
+    * PCOM, Attachmate Extra 등 에뮬레이터 Telnet 협상 차이를 패킷 캡처(TK4- MVS 포함)로 분석 및 대응
+    * vtammgr, OFGW 간 커밋 타이밍으로 인한 LU 중복, DB 오류 후 무한 루프 수정
+    * INQUIRE TERMINAL 시 OUTSERVICE 터미널 오류 응답 누락으로 OSC가 무한 대기하는 문제 수정
+    * NIO pipe write 블로킹 데드락, 동시 접속 시 리전 로그온 실패(리스트 순회 중 삭제) 분석 및 수정
+    * 운영 환경 CPU 100% 장애: java core, pcap 분석으로 TN3270E negotiation 무한 루프 원인 파악, 루프 없는 구조로 재설계안 작성
+    * 스크립트 실행 트랜잭션의 AID 키 미처리, PLT 프로그램 트랜잭션 미인식, 리전 종료 시 연결 미해제 수정
+    * 비정상 포트, null 소켓 채널, Tmax 채널 풀 고갈 시 스레드가 종료되는 예외 처리
+    * UTF-16 BOM으로 인한 NegativeArraySizeException 수정
+
+    # 기타
+
+    * JEUS 7 → 8 마이그레이션 시 웹소켓 세션 속성 누락 원인 분석
+    * SVN → Git 저장소 이전, Ant → Gradle 빌드 전환, 이전 버전 소스 복구
+    * 패치 제작, QA 패치 검증, 운영 사이트 패치 배포
   `,
     images: [],
     skills: getSkills("java", "jeus", "tibero"),
@@ -742,6 +794,42 @@ const projects: Array<{
     * 한국어, 일본어, 중국어 입력기 구현
     * Context menu(copy, cut, delete) 구현
     * 각종 버그 수정, 기능 개선
+
+    # 일본어(DBCS) 입력
+
+    * compositionstart/update/end 이벤트 기반 일본어 IME 입력 재구현
+    * 커서 이동, 후보 변환, ESC 취소, INSERT 모드, AUTOTAB, Backspace, numpad 입력 등 20여 건 수정
+    * 전각·반각 필드 검증 및 경고, 1바이트 필드 반각 카타카나 입력 허용
+    * 반각 필드에서 전각 필드로 이동 시 IME 창이 열리지 않는 문제 수정
+    * 2바이트 문자 혼용 시 SO/SI 오프셋 계산 오류로 인한 필드 속성 손상 문제 수정
+    * 일본어 코드 변환(CPM) 사용 시 상태 표시 문구 현지화
+    * IE 전용 입력 버그(커서 이동, IME 언어 전환, 경고 문구 깨짐, numpad 한자 변환) 수정
+
+    # 단축키, 입력
+
+    * 단축키 설정 파일 Export/Import, 3개 이상 단축키 지원
+    * 다중 키 조합 단축키가 첫 키만으로 실행되는 문제 수정, 충돌 단축키 저장 방지
+    * HOME, FIRST_FIELD, SELECT_ALL(Ctrl+A), HELP(Alt+F1), DISCONNECT 단축키 추가
+    * 엑셀 데이터(탭, 줄바꿈)를 비보호 필드에 차례로 채우는 붙여넣기, rtrim, auto_tab_paste 옵션 추가
+    * 붙여넣기 후 커서 위치를 IBM PCOM과 동일하게 조정
+    * Clipboard API 제약 조사 후 contextmenu 이벤트 기반 우클릭 메뉴 구현
+    * 숫자 전용 필드 처리, 한국어·일본어·영어 경고, protect numeric 토글 추가
+    * 화면 키보드 닫기 버튼, 특수키 기호 표시, SHIFT 해제 시 특수문자 복구 수정
+
+    # 화면, 성능
+
+    * 화면 셀당 DOM 요소가 많아 갱신에 7초가 걸리는 문제 프로파일링
+    * SVG → div 전환으로 렌더링 최대 30배 개선, React·Redux 시제품으로 IE 8.7초 → 0.29초
+    * 인쇄용 CSS 적용, IE 인쇄 시 빈 페이지 문제 수정
+    * 백그라운드 탭에서 BLINK 애니메이션이 쌓이는 문제 수정
+    * PF1 도움말 페이지 팝업
+
+    # 기타
+
+    * JEUS CacheFilter 적용으로 패치 후 브라우저 캐시 삭제가 필요하던 문제 해결
+    * 라이선스 확인 팝업 오류 수정
+    * 웹터미널을 OFGW 저장소에서 Git 서브모듈로 분리
+    * 웹터미널 가이드 매뉴얼 개정(단축키, 붙여넣기 옵션, SO/SI 설정)
   `,
     images: [
       [
@@ -770,11 +858,39 @@ const projects: Array<{
     
     # 주요 업무
     
-    * CICS COBOL 커맨드  JAVA 변환을 위한 CICS COBOL 커맨드 파서 제작
+    * CICS COBOL 커맨드 → JAVA 변환을 위한 CICS COBOL 커맨드 파서 제작
     * CICS JAVA 커맨드 구현
+
+    # CICS 커맨드 런타임(ProObject, Tibero)
+
+    * FILE: READ, WRITE, REWRITE, DELETE, STARTBR, ENDBR, RESETBR, READNEXT, READPREV를 VSAM 대신 RDB 기반으로 구현
+    * FILE DATASET, KEYLENGTH, GENERIC, EQUAL/GTEQ, TOKEN, NUMREC 옵션 지원
+    * FILE pre-fetch 캐시, 숫자·문자 혼합 키 정렬, 캐시 오염 버그 수정
+    * 숫자 키 데이터 손실(01 → 1) 방지를 위해 RIDFLD를 문자열로 처리
+    * TSQ, TDQ: 데이터·메타 테이블 설계, QNAME 옵션, 만료 처리, Tibero 타임존 변환으로 인한 9시간 차이 수정
+    * CONTAINER(GET, PUT, MOVE, DELETE), DOCUMENT(CREATE, INSERT, SET, RETRIEVE, DELETE) 구현
+    * SPOOL(SPOOLOPEN, SPOOLWRITE, SPOOLCLOSE) 구현 및 코드 생성 작성
+    * SYNCPOINT, ROLLBACK을 ProObject 트랜잭션 split/join으로 처리하는 PoC
+    * AspectJ 기반 커맨드 구조로 이전, CicsConditionException으로 예외 체계 통일
+    * 샘플 CICS 트랜잭션 변환 및 E2E 검증, JEUS·ProObject 버전 호환성 테스트
+
+    # 파서, 마이그레이션 도구
+
+    * openframe-cicscmd-parser: ANTLR4 기반 EXEC CICS 커맨드 파서, 버그 수정 및 Maven 배포
+    * CICS SD 파서: ANTLR4로 CSD 정의 파싱, 중복 리소스 감지, 라인 번호 출력, OFMiner 연동
+    * CICS SD Migrator: SD 테이블 생성·이관 서비스, MERGE 쿼리 전환, Miner DB 직접 조회, Gradle·Docker 배포
+    * OFMiner CSD 테이블 스키마 수정, OpenFrame 7 BMS 지원 항목 테이블 구성
+
+    # 기타
+
+    * 데모용 CICS 커맨드·옵션 조사, 고객사 필요 커맨드 정리, 지원·미지원 항목 정리
+    * CICS DOCUMENT 심볼 치환에 Aho–Corasick 알고리즘 적용 연구
+    * OF Manager CSD, TSQ/TDQ 관리 화면 요구사항 정의
+    * TSQ, TDQ, CONTAINER, DOCUMENT, FILE, SPOOL 매뉴얼 작성
+    * 타팀 개발 환경 구성, 통합 테스트 지원, 인수인계 문서 작성
   `,
     images: [],
-    skills: getSkills("java", "antlr"),
+    skills: getSkills("java", "antlr", "tibero"),
   },
   {
     company: undefined,
